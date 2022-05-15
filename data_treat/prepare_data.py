@@ -1,14 +1,21 @@
 import pandas as pd
 import numpy as np
+from treat_func import for_age_column, clear_quotes, clear_quotes_and_point, clear_y_colum
+from sklearn.preprocessing import LabelEncoder
 
-class DataPrepare:
+TEXT_FEATURES = ["job", "marital", "education", "default", "housing", 
+                "loan", "contact", "month", "day_of_week", "poutcome", "y"]
+
+class DataCleaner:
 
     def __init__(self, file) -> None:
         self.path = f"./data/{file}.csv"
         self.data = pd.read_csv(self.path)
+        self.data_treat()
 
     def data_treat(self):
-        pass
+        self.remane_colums()
+        self.treat_columns()
 
     def remane_colums(self):
         for colum in self.data:
@@ -17,15 +24,37 @@ class DataPrepare:
             else:
                 self.data = self.data.rename(columns={colum:colum.replace("\"","")})
 
-    def treat_rows(self):
-        pass
+    def treat_columns(self):
+        for colum in self.data:
+            if colum == "age":
+                self.data["age"] = self.data["age"].apply(for_age_column)
+            elif colum == "job":
+                self.data["job"] = self.data["job"].apply(clear_quotes_and_point)
+            elif colum == "y":
+                self.data["y"] = self.data["y"].apply(clear_y_colum)
+            else:
+                self.data[colum] = self.data[colum].apply(clear_quotes)
+        self.data = self.data.astype({'age':'int64'})
 
-a = DataPrepare("bank-additional")
-#b = DataPrepare("bank-additional")
-print(a.data.columns)
-a.remane_colums()
-print(a.data.columns)
+    def head(self):
+        return self.data.head()
 
+    def get_data(self):
+        return self.data
+
+class DataEncoder:
+
+    def __init__(self, data) -> None:
+        self.data = data
+        self.label_encoding()
+
+    def label_encoding(self):
+        label_encoder = LabelEncoder()
+        for col in TEXT_FEATURES:
+            self.data[col] = label_encoder.fit_transform(self.data[col]) + 1
+
+    def get_data(self):
+        return self.data
 
 '''
     index: The index of the row.
