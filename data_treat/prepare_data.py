@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from treat_func import for_age_column, clear_quotes, clear_quotes_and_point, clear_y_colum
+from data_treat.treat_func import for_age_column, clear_quotes, clear_quotes_and_point, clear_y_colum
 from sklearn.preprocessing import LabelEncoder
 
 TEXT_FEATURES = ["job", "marital", "education", "default", "housing", 
@@ -55,6 +55,9 @@ class DataEncoder:
 
     def get_data(self):
         return self.data
+#a = DataCleaner("bank-additional-full")
+#b = DataEncoder(a.get_data())
+#print(pd.value_counts(b.get_data()["y"]))
 
 '''
     index: The index of the row.
