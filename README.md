@@ -5,3 +5,5 @@
 Рамазан : Лог. Регрессия
 Денис : соседи
 Эмиль : feature enginering?, работа с данными.
+
+~ https://www.kaggle.com/datasets/satoshidatamoto/the-success-of-bank-telemarketinge
