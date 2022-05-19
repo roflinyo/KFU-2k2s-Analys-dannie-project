@@ -1,9 +1,10 @@
 # KFU-2k2s-Analys-dannie-project
 
-Амир : random forest
-Фаннур : деревья решений
-Рамазан : Лог. Регрессия
-Денис : соседи
-Эмиль : feature enginering?, работа с данными.
+Амир : random forest</br>
+Фаннур : деревья решений</br>
+Рамазан : Лог. Регрессия</br>
+Денис : соседи</br>
+Эмиль : feature enginering?, работа с данными.</br>
 
-~ https://www.kaggle.com/datasets/satoshidatamoto/the-success-of-bank-telemarketinge
+
+[DataSet](https://www.kaggle.com/datasets/satoshidatamoto/the-success-of-bank-telemarketinge)
