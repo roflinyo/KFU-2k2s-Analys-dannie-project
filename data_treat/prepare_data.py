@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from data_treat.treat_func import for_age_column, clear_quotes, clear_quotes_and_point, clear_y_colum
 from sklearn.preprocessing import LabelEncoder
+from sklearn.utils import shuffle
 
 TEXT_FEATURES = ["job", "marital", "education", "default", "housing", 
                 "loan", "contact", "month", "day_of_week", "poutcome", "y"]
@@ -51,12 +52,35 @@ class DataEncoder:
     def label_encoding(self):
         label_encoder = LabelEncoder()
         for col in TEXT_FEATURES:
-            self.data[col] = label_encoder.fit_transform(self.data[col]) + 1
+            if col == "y":
+                self.data[col] = label_encoder.fit_transform(self.data[col])
+            else:
+                self.data[col] = label_encoder.fit_transform(self.data[col]) + 1
 
     def get_data(self):
         return self.data
+
+class Equlizer:
+
+    def __init__(self, data) -> None:
+        self.data = data
+        self.num = 500
+        self.equl()
+
+    def equl(self):
+        data_0 = self.data[self.data["y"] == 0][:self.num]
+        data_1 = self.data[self.data["y"] == 1]
+        self.data = pd.concat([data_0,data_1]).sample(frac=1)
+        print(self.data)
+        
+
+    def get_data(self):
+        return self.data
+
 #a = DataCleaner("bank-additional-full")
-#b = DataEncoder(a.get_data())
+##b = DataEncoder(a.get_data())
+#c = Equlizer(b.get_data())
+#print(c)
 #print(pd.value_counts(b.get_data()["y"]))
 
 '''
