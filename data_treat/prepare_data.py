@@ -62,16 +62,16 @@ class DataEncoder:
 
 class Equlizer:
 
-    def __init__(self, data) -> None:
+    def __init__(self, data, flag_full) -> None:
         self.data = data
         self.num = 500
-        self.equl()
+        if flag_full:
+            self.equl()
 
     def equl(self):
         data_0 = self.data[self.data["y"] == 0][:self.num]
         data_1 = self.data[self.data["y"] == 1]
         self.data = pd.concat([data_0,data_1]).sample(frac=1)
-        print(self.data)
         
 
     def get_data(self):
