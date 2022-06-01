@@ -4,38 +4,12 @@ from data_treat.treat_func import for_age_column, clear_quotes, clear_quotes_and
 from sklearn.preprocessing import LabelEncoder
 from sklearn.utils import shuffle
 
-TEXT_FEATURES = ["job", "marital", "education", "default", "housing", 
-                "loan", "contact", "month", "day_of_week", "poutcome", "y"]
 
 class DataCleaner:
 
     def __init__(self, file) -> None:
         self.path = f"./data/{file}.csv"
         self.data = pd.read_csv(self.path)
-        self.data_treat()
-
-    def data_treat(self):
-        self.remane_colums()
-        self.treat_columns()
-
-    def remane_colums(self):
-        for colum in self.data:
-            if "age" in colum:
-                self.data = self.data.rename(columns={colum:"age"})
-            else:
-                self.data = self.data.rename(columns={colum:colum.replace("\"","")})
-
-    def treat_columns(self):
-        for colum in self.data:
-            if colum == "age":
-                self.data["age"] = self.data["age"].apply(for_age_column)
-            elif colum == "job":
-                self.data["job"] = self.data["job"].apply(clear_quotes_and_point)
-            elif colum == "y":
-                self.data["y"] = self.data["y"].apply(clear_y_colum)
-            else:
-                self.data[colum] = self.data[colum].apply(clear_quotes)
-        self.data = self.data.astype({'age':'int64'})
 
     def head(self):
         return self.data.head()
@@ -43,41 +17,26 @@ class DataCleaner:
     def get_data(self):
         return self.data
 
-class DataEncoder:
 
-    def __init__(self, data) -> None:
-        self.data = data
-        self.label_encoding()
-
-    def label_encoding(self):
-        label_encoder = LabelEncoder()
-        for col in TEXT_FEATURES:
-            if col == "y":
-                self.data[col] = label_encoder.fit_transform(self.data[col])
-            else:
-                self.data[col] = label_encoder.fit_transform(self.data[col]) + 1
-
-    def get_data(self):
-        return self.data
 
 class Equlizer:
 
-    def __init__(self, data, flag_full) -> None:
+    def __init__(self, data, flag_full, num) -> None:
         self.data = data
-        self.num = 500
-        if flag_full:
+        self.num = num
+        if not flag_full:
             self.equl()
 
     def equl(self):
-        data_0 = self.data[self.data["y"] == 0][:self.num]
-        data_1 = self.data[self.data["y"] == 1]
+        data_0 = self.data[self.data["fraud"] == 0][:self.num]
+        data_1 = self.data[self.data["fraud"] == 1]
         self.data = pd.concat([data_0,data_1]).sample(frac=1)
         
 
     def get_data(self):
         return self.data
 
-#a = DataCleaner("bank-additional-full")
+
 ##b = DataEncoder(a.get_data())
 #c = Equlizer(b.get_data())
 #print(c)

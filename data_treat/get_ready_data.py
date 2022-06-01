@@ -1,18 +1,15 @@
-import pandas as pd
-from sqlalchemy import true
-from data_treat.prepare_data import DataCleaner, DataEncoder, Equlizer
+from data_treat.prepare_data import DataCleaner, Equlizer
 
-def get_data(full=True):
-    a = DataCleaner("bank-additional")
-    b = DataEncoder(a.get_data())
-    c = Equlizer(b.get_data(), full)
+NUM = 87403
 
-
+def get_data(full=False):
+    a = DataCleaner("card_transdata")
+    c = Equlizer(a.get_data(), full, NUM)
 
     return c.get_data()
 
 def get_data_for_analiz():
-    a = DataCleaner("bank-additional")
+    a = DataCleaner("card_transdata")
     return a.get_data()
 
 
