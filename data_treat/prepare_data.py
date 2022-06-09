@@ -36,6 +36,15 @@ class Equlizer:
     def get_data(self):
         return self.data
 
+class ThreeQRule:
+
+    def __init__(self, data) -> None:
+        self.data = data
+
+    def standard_deviation(self):
+        pass
+        #return np.std(self.data.values, 
+
 
 ##b = DataEncoder(a.get_data())
 #c = Equlizer(b.get_data())
