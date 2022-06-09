@@ -38,14 +38,24 @@ class Equlizer:
 
 class ThreeQRule:
 
-    def __init__(self, data) -> None:
-        self.data = data
+    def __init__(self, data: pd.DataFrame) -> None:
+        self.data = data 
+        val_dict = self.standard_deviation()
+        self.q3_clear(val_dict)
 
     def standard_deviation(self):
-        pass
-        #return np.std(self.data.values, 
+        val_dict = {}
+        for column in self.data.columns:
+            std = self.data[column].values
+            val_dict[column] = (std - std * 3, std + std * 3)
+        return val_dict
 
+    def q3_clear(self, val_dict):
+        for column in self.data.columns:
+            self.data[column] = self.data[val_dict[column][0] < self.data["fraud"].values < val_dict[column][1]]
 
+    def get_data(self):
+        return self.data
 ##b = DataEncoder(a.get_data())
 #c = Equlizer(b.get_data())
 #print(c)
