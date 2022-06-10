@@ -7,4 +7,4 @@
 Эмиль : feature enginering?, работа с данными.</br>
 
 
-[DataSet](https://www.kaggle.com/datasets/satoshidatamoto/the-success-of-bank-telemarketinge)
+[DataSet](https://www.kaggle.com/datasets/dhanushnarayananr/credit-card-fraud)
